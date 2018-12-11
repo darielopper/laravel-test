@@ -29,6 +29,5 @@
             </div>
         </div>
         <modal @accept="send_data"></modal>
-        <pre>@{{ $data }}</pre>
     </div>
 @endsection
