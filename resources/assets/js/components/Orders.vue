@@ -5,6 +5,13 @@
             <th>Actions</th>
         </thead>
         <tbody>
+            <tr v-if="elements.length === 0">
+                <td :colspan="headers.length + 1">
+                    <div class="alert alert-warning">
+                        No data to show
+                    </div>
+                </td>
+            </tr>
             <tr v-for="(item, i) in elements" :key="i">
                 <td v-for="(data,j) in headers" :key="`m${j}`">
                     {{ get_data(item, data, i) }}
@@ -45,13 +52,15 @@
                 return item[data.abbr] ? item[data.abbr] : i + 1;
             },
             remove(item){
-                this.$axios.post(`/order/${item.id}/delete`).then(json => {
-                    this.elements.splice(this.elements.findIndex(v => v.id === item.id), 1);
-                    alert(`Order No. ${item.id} removed`);
-                }).catch(error => {
-                    console.log(error);
-                    alert('Some error was found deleting a order');
-                });
+                if(confirm("Do you really want remove that order?")){
+                    this.$axios.post(`/order/${item.id}/delete`).then(json => {
+                        this.elements.splice(this.elements.findIndex(v => v.id === item.id), 1);
+                        alert(`Order No. ${item.id} removed`);
+                    }).catch(error => {
+                        console.log(error);
+                        alert('Some error was found deleting a order');
+                    });
+                }
             }
         }
     }

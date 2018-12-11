@@ -1111,7 +1111,8 @@ Vue.component('modal', __webpack_require__(65));
 var app = new Vue({
     el: '#app',
     data: {
-        orders: []
+        orders: [],
+        criteria: ''
     },
     mounted: function mounted() {
         var _this = this;
@@ -1127,19 +1128,26 @@ var app = new Vue({
     computed: {
         total: function total() {
             var result = 0;
-            this.orders.forEach(function (i) {
+            this.filtered.forEach(function (i) {
                 return result += i.price;
             });
             return '$' + result;
+        },
+        filtered: function filtered() {
+            var _this2 = this;
+
+            return this.criteria.toString().trim().length === 0 ? this.orders : this.orders.filter(function (v) {
+                return v.client.toString().toLowerCase().indexOf(_this2.criteria) >= 0 || v.offer.toString().toLowerCase().indexOf(_this2.criteria) >= 0;
+            });
         }
     },
     methods: {
         send_data: function send_data(model) {
-            var _this2 = this;
+            var _this3 = this;
 
             this.$axios.post('/order/store', model).then(function (json) {
                 alert('New order created successfully!!!');
-                _this2.orders.push(json.data.model);
+                _this3.orders.push(json.data.model);
             }).catch(function (error) {
                 console.log(error);
                 alert('Some errors was found saving order');
@@ -43859,7 +43867,7 @@ exports = module.exports = __webpack_require__(45)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -43870,6 +43878,13 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -43910,15 +43925,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         remove: function remove(item) {
             var _this = this;
 
-            this.$axios.post("/order/" + item.id + "/delete").then(function (json) {
-                _this.elements.splice(_this.elements.findIndex(function (v) {
-                    return v.id === item.id;
-                }), 1);
-                alert("Order No. " + item.id + " removed");
-            }).catch(function (error) {
-                console.log(error);
-                alert('Some error was found deleting a order');
-            });
+            if (confirm("Do you really want remove that order?")) {
+                this.$axios.post("/order/" + item.id + "/delete").then(function (json) {
+                    _this.elements.splice(_this.elements.findIndex(function (v) {
+                        return v.id === item.id;
+                    }), 1);
+                    alert("Order No. " + item.id + " removed");
+                }).catch(function (error) {
+                    console.log(error);
+                    alert('Some error was found deleting a order');
+                });
+            }
         }
     }
 });
@@ -43946,40 +43963,55 @@ var render = function() {
     _vm._v(" "),
     _c(
       "tbody",
-      _vm._l(_vm.elements, function(item, i) {
-        return _c(
-          "tr",
-          { key: i },
-          [
-            _vm._l(_vm.headers, function(data, j) {
-              return _c("td", { key: "m" + j }, [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(_vm.get_data(item, data, i)) +
-                    "\n            "
+      [
+        _vm.elements.length === 0
+          ? _c("tr", [
+              _c("td", { attrs: { colspan: _vm.headers.length + 1 } }, [
+                _c("div", { staticClass: "alert alert-warning" }, [
+                  _vm._v(
+                    "\n                    No data to show\n                "
+                  )
+                ])
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm._l(_vm.elements, function(item, i) {
+          return _c(
+            "tr",
+            { key: i },
+            [
+              _vm._l(_vm.headers, function(data, j) {
+                return _c("td", { key: "m" + j }, [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm.get_data(item, data, i)) +
+                      "\n            "
+                  )
+                ])
+              }),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-xs btn-danger",
+                    on: {
+                      click: function($event) {
+                        $event.stopPropagation()
+                        _vm.remove(item)
+                      }
+                    }
+                  },
+                  [_vm._v("Delete")]
                 )
               ])
-            }),
-            _vm._v(" "),
-            _c("td", [
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-xs btn-danger",
-                  on: {
-                    click: function($event) {
-                      $event.stopPropagation()
-                      _vm.remove(item)
-                    }
-                  }
-                },
-                [_vm._v("Delete")]
-              )
-            ])
-          ],
-          2
-        )
-      })
+            ],
+            2
+          )
+        })
+      ],
+      2
     )
   ])
 }

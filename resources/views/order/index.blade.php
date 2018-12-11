@@ -18,10 +18,10 @@
                 <div class="panel-body">
                     <div class="form-group pull-right">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Buscar" />
+                            <input type="text" class="form-control" placeholder="Search" v-model="criteria"/>
                         </div>
                     </div>
-                    <orders :elements="orders"></orders>
+                    <orders :elements="filtered"></orders>
                 </div>
                 <div class="panel-footer">
                    <strong>TOTAL: </strong> <span class="label label-default" v-text="total"></span>
@@ -29,5 +29,6 @@
             </div>
         </div>
         <modal @accept="send_data"></modal>
+        <pre>@{{ $data }}</pre>
     </div>
 @endsection
