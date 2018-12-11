@@ -35,6 +35,13 @@ const app = new Vue({
             console.log(this.orders);
         })
     },
+    computed: {
+      total(){
+          let result = 0;
+          this.orders.forEach(i => result += i.price );
+          return '$'+result;
+      }
+    },
     methods: {
         send_data(model){
 

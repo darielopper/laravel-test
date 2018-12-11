@@ -1125,6 +1125,15 @@ var app = new Vue({
         });
     },
 
+    computed: {
+        total: function total() {
+            var result = 0;
+            this.orders.forEach(function (i) {
+                return result += i.price;
+            });
+            return '$' + result;
+        }
+    },
     methods: {
         send_data: function send_data(model) {}
     }

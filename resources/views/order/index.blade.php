@@ -19,7 +19,7 @@
                     <orders :elements="orders"></orders>
                 </div>
                 <div class="panel-footer">
-                   <strong>TOTAL: </strong> <span class="label label-default">$0</span>
+                   <strong>TOTAL: </strong> <span class="label label-default" v-text="total"></span>
                 </div>
             </div>
         </div>
