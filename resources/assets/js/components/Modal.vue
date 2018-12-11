@@ -28,8 +28,8 @@
                     </slot>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary btn-sm" @click="accept" :disabled="!valid_data">ACEPTAR</button>
-                    <button type="reset" class="btn btn-default btn-sm" data-dismiss="modal" @click="$emit('reject')">CANCELAR</button>
+                    <button type="submit" class="btn btn-primary btn-sm" @click="accept" :disabled="!valid_data">ACCEPT</button>
+                    <button type="reset" class="btn btn-default btn-sm" data-dismiss="modal" @click="$emit('reject')">CANCEL</button>
                 </div>
             </div>
         </div>
