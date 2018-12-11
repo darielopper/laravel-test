@@ -13,25 +13,16 @@
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <strong>Orders</strong> <a class="btn btn-success btn-sm pull-right">Add</a>
+                    <strong>Orders</strong> <a class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#orderModal">Add</a>
                 </div>
                 <div class="panel-body">
-                    <table class="table table-condensed table-striped">
-                        <thead>
-                            <th>No.</th>
-                            <th>Offer</th>
-                            <th>Amount</th>
-                            <th>Price</th>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
+                    <orders></orders>
                 </div>
                 <div class="panel-footer">
                    <strong>TOTAL: </strong> <span class="label label-default">$0</span>
                 </div>
             </div>
         </div>
+        <modal @accept="send_data"></modal>
     </div>
 @endsection

@@ -18,10 +18,17 @@ Vue.prototype.$axios = require('axios');
  */
 
 Vue.component('example', require('./components/Example.vue'));
+Vue.component('orders', require('./components/Orders.vue'));
+Vue.component('modal', require('./components/Modal.vue'));
 
 const app = new Vue({
     el: '#app',
     mounted(){
 
+    },
+    methods: {
+        send_data(model){
+
+        }
     }
 });
