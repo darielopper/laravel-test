@@ -1110,6 +1110,9 @@ Vue.component('modal', __webpack_require__(65));
 
 var app = new Vue({
   el: '#app',
+  data: {
+    orders: [{ client: 'dariel' }]
+  },
   mounted: function mounted() {},
 
   methods: {
@@ -43828,7 +43831,7 @@ exports = module.exports = __webpack_require__(45)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -43849,16 +43852,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "Orders",
+    props: {
+        elements: { type: Array }
+    },
     data: function data() {
         return {
-            headers: ["No.", "Client", "Offer", "Amount", "Price"]
+            headers: [{ text: "No.", abbr: null }, { text: "Client", abbr: "client" }, { text: "Offer", abbr: "offer" }, { text: "Amount", abbr: "amount" }, { text: "Price", abbr: "price" }]
         };
     },
-    mounted: function mounted() {
-        console.log('probando');
+    mounted: function mounted() {},
+
+    computed: {},
+    methods: {
+        get_data: function get_data(item, data, i) {
+            return item[data.abbr] ? item[data.abbr] : i + 1;
+        }
     }
 });
 
@@ -43874,11 +43890,28 @@ var render = function() {
     _c(
       "thead",
       _vm._l(_vm.headers, function(item) {
-        return _c("th", [_vm._v(_vm._s(item))])
+        return _c("th", [_vm._v(_vm._s(item.text))])
       })
     ),
     _vm._v(" "),
-    _c("tbody")
+    _c(
+      "tbody",
+      _vm._l(_vm.elements, function(item, i) {
+        return _c(
+          "tr",
+          { key: i },
+          _vm._l(_vm.headers, function(data, j) {
+            return _c("td", { key: "m" + j }, [
+              _vm._v(
+                "\n                " +
+                  _vm._s(_vm.get_data(item, data, i)) +
+                  "\n            "
+              )
+            ])
+          })
+        )
+      })
+    )
   ])
 }
 var staticRenderFns = []
@@ -44203,7 +44236,7 @@ var render = function() {
                   attrs: { type: "submit", disabled: !_vm.valid_data },
                   on: { click: _vm.accept }
                 },
-                [_vm._v("ACEPTAR")]
+                [_vm._v("ACCEPT")]
               ),
               _vm._v(" "),
               _c(
@@ -44217,7 +44250,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("CANCELAR")]
+                [_vm._v("CANCEL")]
               )
             ])
           ])

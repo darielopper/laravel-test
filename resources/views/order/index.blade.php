@@ -16,7 +16,7 @@
                     <strong>Orders</strong> <a class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#orderModal">Add</a>
                 </div>
                 <div class="panel-body">
-                    <orders></orders>
+                    <orders :elements="orders"></orders>
                 </div>
                 <div class="panel-footer">
                    <strong>TOTAL: </strong> <span class="label label-default">$0</span>

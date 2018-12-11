@@ -23,6 +23,9 @@ Vue.component('modal', require('./components/Modal.vue'));
 
 const app = new Vue({
     el: '#app',
+    data: {
+      orders: [{client: 'dariel'}]
+    },
     mounted(){
 
     },
