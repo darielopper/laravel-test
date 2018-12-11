@@ -16,12 +16,7 @@
                     <strong>Orders</strong> <a class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#orderModal">Add</a>
                 </div>
                 <div class="panel-body">
-                    <div class="form-group pull-right">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search" v-model="criteria"/>
-                        </div>
-                    </div>
-                    <orders :elements="filtered"></orders>
+                    <orders :elements="orders"></orders>
                 </div>
                 <div class="panel-footer">
                    <strong>TOTAL: </strong> <span class="label label-default" v-text="total"></span>

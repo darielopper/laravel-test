@@ -24,8 +24,7 @@ Vue.component('modal', require('./components/Modal.vue'));
 const app = new Vue({
     el: '#app',
     data: {
-      orders: [],
-      criteria: ''
+      orders: []
     },
     mounted(){
         this.$axios.post('/orders/list').then((json) => {
@@ -38,27 +37,13 @@ const app = new Vue({
     computed: {
       total(){
           let result = 0;
-          this.filtered.forEach(i => result += i.price );
+          this.orders.forEach(i => result += i.price );
           return '$'+result;
-      },
-      filtered(){
-          return this.criteria.toString().trim().length === 0 ?
-              this.orders :
-              this.orders.filter(v => {
-                  return v.client.toString().toLowerCase().indexOf(this.criteria) >= 0 ||
-                      v.offer.toString().toLowerCase().indexOf(this.criteria) >= 0;
-              });
       }
     },
     methods: {
         send_data(model){
-            this.$axios.post('/order/store', model).then(json => {
-                alert('New order created successfully!!!');
-                this.orders.push(json.data.model);
-            }).catch(error => {
-                console.log(error);
-                alert('Some errors was found saving order');
-            })
+
         }
     }
 });

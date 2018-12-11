@@ -1111,8 +1111,7 @@ Vue.component('modal', __webpack_require__(65));
 var app = new Vue({
     el: '#app',
     data: {
-        orders: [],
-        criteria: ''
+        orders: []
     },
     mounted: function mounted() {
         var _this = this;
@@ -1128,31 +1127,14 @@ var app = new Vue({
     computed: {
         total: function total() {
             var result = 0;
-            this.filtered.forEach(function (i) {
+            this.orders.forEach(function (i) {
                 return result += i.price;
             });
             return '$' + result;
-        },
-        filtered: function filtered() {
-            var _this2 = this;
-
-            return this.criteria.toString().trim().length === 0 ? this.orders : this.orders.filter(function (v) {
-                return v.client.toString().toLowerCase().indexOf(_this2.criteria) >= 0 || v.offer.toString().toLowerCase().indexOf(_this2.criteria) >= 0;
-            });
         }
     },
     methods: {
-        send_data: function send_data(model) {
-            var _this3 = this;
-
-            this.$axios.post('/order/store', model).then(function (json) {
-                alert('New order created successfully!!!');
-                _this3.orders.push(json.data.model);
-            }).catch(function (error) {
-                console.log(error);
-                alert('Some errors was found saving order');
-            });
-        }
+        send_data: function send_data(model) {}
     }
 });
 
@@ -43867,7 +43849,7 @@ exports = module.exports = __webpack_require__(45)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -43878,17 +43860,6 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -43921,21 +43892,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         get_data: function get_data(item, data, i) {
             return item[data.abbr] ? item[data.abbr] : i + 1;
-        },
-        remove: function remove(item) {
-            var _this = this;
-
-            if (confirm("Do you really want remove that order?")) {
-                this.$axios.post("/order/" + item.id + "/delete").then(function (json) {
-                    _this.elements.splice(_this.elements.findIndex(function (v) {
-                        return v.id === item.id;
-                    }), 1);
-                    alert("Order No. " + item.id + " removed");
-                }).catch(function (error) {
-                    console.log(error);
-                    alert('Some error was found deleting a order');
-                });
-            }
         }
     }
 });
@@ -43951,67 +43907,28 @@ var render = function() {
   return _c("table", { staticClass: "table table-condensed table-striped" }, [
     _c(
       "thead",
-      [
-        _vm._l(_vm.headers, function(item) {
-          return _c("th", [_vm._v(_vm._s(item.text))])
-        }),
-        _vm._v(" "),
-        _c("th", [_vm._v("Actions")])
-      ],
-      2
+      _vm._l(_vm.headers, function(item) {
+        return _c("th", [_vm._v(_vm._s(item.text))])
+      })
     ),
     _vm._v(" "),
     _c(
       "tbody",
-      [
-        _vm.elements.length === 0
-          ? _c("tr", [
-              _c("td", { attrs: { colspan: _vm.headers.length + 1 } }, [
-                _c("div", { staticClass: "alert alert-warning" }, [
-                  _vm._v(
-                    "\n                    No data to show\n                "
-                  )
-                ])
-              ])
+      _vm._l(_vm.elements, function(item, i) {
+        return _c(
+          "tr",
+          { key: i },
+          _vm._l(_vm.headers, function(data, j) {
+            return _c("td", { key: "m" + j }, [
+              _vm._v(
+                "\n                " +
+                  _vm._s(_vm.get_data(item, data, i)) +
+                  "\n            "
+              )
             ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm._l(_vm.elements, function(item, i) {
-          return _c(
-            "tr",
-            { key: i },
-            [
-              _vm._l(_vm.headers, function(data, j) {
-                return _c("td", { key: "m" + j }, [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.get_data(item, data, i)) +
-                      "\n            "
-                  )
-                ])
-              }),
-              _vm._v(" "),
-              _c("td", [
-                _c(
-                  "a",
-                  {
-                    staticClass: "btn btn-xs btn-danger",
-                    on: {
-                      click: function($event) {
-                        $event.stopPropagation()
-                        _vm.remove(item)
-                      }
-                    }
-                  },
-                  [_vm._v("Delete")]
-                )
-              ])
-            ],
-            2
-          )
-        })
-      ],
-      2
+          })
+        )
+      })
     )
   ])
 }
@@ -44111,7 +44028,7 @@ exports = module.exports = __webpack_require__(45)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -44160,7 +44077,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "Modal",
@@ -44168,11 +44084,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             model: {
                 client: '',
-                offer: 0,
+                offer: '',
                 amount: 1
             },
-            show_modal: true,
-            offers: []
+            show_modal: true
         };
     },
 
@@ -44181,55 +44096,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         accept: function accept() {
-            this.$emit('accept', JSON.parse(JSON.stringify(this.model)));
-            this.clearData();
-            this.show_modal = false;
-            var modal = document.querySelector('.modal-backdrop');
-            modal.remove();
-        },
-        clearData: function clearData() {
-            this.model.client = '';
-            this.offer = 0;
-            this.amount = 1;
+            this.$emit('accept', this.model);
+            alert('aki');
         }
     },
-    created: function created() {
-        var _this = this;
-
-        this.$axios.post('/offers/list').then(function (json) {
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-                for (var _iterator = json.data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var element = _step.value;
-
-                    _this.offers.push({ id: element.id, text: element.type + ' - ' + element.size });
-                }
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
-                    }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                }
-            }
-        }).catch(function (error) {
-            console.log(error);
-            alert('Some error loading offers');
-        });
-    },
-
     computed: {
         valid_data: function valid_data() {
-            return this.model.amount > 0 && this.model.client.length > 3 && this.model.offer !== 0;
+            return this.model.amount > 0 && this.model.client.length > 3 && this.model.offer !== 'Select 1 Offer';
         }
     }
 });
@@ -44253,7 +44126,7 @@ var render = function() {
           expression: "show_modal"
         }
       ],
-      class: { modal: true, fade: true, in: _vm.show_modal },
+      staticClass: "modal fade",
       attrs: { id: "orderModal", tabindex: "-1", role: "dialog" }
     },
     [
@@ -44338,20 +44211,7 @@ var render = function() {
                             }
                           }
                         },
-                        [
-                          _c("option", { attrs: { value: "0" } }, [
-                            _vm._v("Select 1 offer")
-                          ]),
-                          _vm._v(" "),
-                          _vm._l(_vm.offers, function(item, j) {
-                            return _c(
-                              "option",
-                              { key: "o" + j, domProps: { value: item.id } },
-                              [_vm._v(_vm._s(item.text))]
-                            )
-                          })
-                        ],
-                        2
+                        [_c("option", [_vm._v("Select 1 offer")])]
                       )
                     ])
                   ]),

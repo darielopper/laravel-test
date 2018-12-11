@@ -2,22 +2,11 @@
     <table class="table table-condensed table-striped">
         <thead>
             <th v-for="item in headers">{{ item.text }}</th>
-            <th>Actions</th>
         </thead>
         <tbody>
-            <tr v-if="elements.length === 0">
-                <td :colspan="headers.length + 1">
-                    <div class="alert alert-warning">
-                        No data to show
-                    </div>
-                </td>
-            </tr>
             <tr v-for="(item, i) in elements" :key="i">
                 <td v-for="(data,j) in headers" :key="`m${j}`">
                     {{ get_data(item, data, i) }}
-                </td>
-                <td>
-                    <a class="btn btn-xs btn-danger" @click.stop="remove(item)">Delete</a>
                 </td>
             </tr>
         </tbody>
@@ -50,17 +39,6 @@
         methods: {
             get_data(item, data, i){
                 return item[data.abbr] ? item[data.abbr] : i + 1;
-            },
-            remove(item){
-                if(confirm("Do you really want remove that order?")){
-                    this.$axios.post(`/order/${item.id}/delete`).then(json => {
-                        this.elements.splice(this.elements.findIndex(v => v.id === item.id), 1);
-                        alert(`Order No. ${item.id} removed`);
-                    }).catch(error => {
-                        console.log(error);
-                        alert('Some error was found deleting a order');
-                    });
-                }
             }
         }
     }

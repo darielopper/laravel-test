@@ -1,6 +1,6 @@
 <template>
     <!-- Modal section -->
-    <div :class="{modal: true, fade: true, in: show_modal}" id="orderModal" tabindex="-1" role="dialog" v-show="show_modal">
+    <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" v-show="show_modal">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -16,8 +16,7 @@
                         <div class="form-group">
                             <div class="form-line">
                                 <select class="form-control" v-model="model.offer">
-                                    <option value="0">Select 1 offer</option>
-                                    <option v-for="(item, j) in offers" :key="`o${j}`" :value="item.id">{{ item.text }}</option>
+                                    <option>Select 1 offer</option>
                                 </select>
                             </div>
                         </div>
@@ -44,11 +43,10 @@
             return {
                 model: {
                     client: '',
-                    offer: 0,
+                    offer: '',
                     amount: 1
                 },
-                show_modal: true,
-                offers: []
+                show_modal: true
             }
         },
         props: {
@@ -56,31 +54,13 @@
         },
         methods: {
             accept(){
-                this.$emit('accept', JSON.parse(JSON.stringify(this.model)));
-                this.clearData();
-                this.show_modal = false;
-                let modal = document.querySelector('.modal-backdrop');
-                modal.remove();
-            },
-            clearData(){
-                this.model.client = '';
-                this.offer = 0;
-                this.amount = 1;
+                this.$emit('accept', this.model);
+                alert('aki');
             }
-        },
-        created(){
-          this.$axios.post('/offers/list').then((json) => {
-              for(let element of json.data){
-                  this.offers.push({id: element.id, text: `${element.type} - ${element.size}`});
-              }
-          }).catch(error => {
-              console.log(error);
-              alert('Some error loading offers');
-          })
         },
         computed: {
             valid_data(){
-                return this.model.amount > 0 && this.model.client.length > 3 && this.model.offer !== 0;
+                return this.model.amount > 0 && this.model.client.length > 3 && this.model.offer !== 'Select 1 Offer';
             }
         }
     }
