@@ -1109,15 +1109,25 @@ Vue.component('orders', __webpack_require__(60));
 Vue.component('modal', __webpack_require__(65));
 
 var app = new Vue({
-  el: '#app',
-  data: {
-    orders: [{ client: 'dariel' }]
-  },
-  mounted: function mounted() {},
+    el: '#app',
+    data: {
+        orders: []
+    },
+    mounted: function mounted() {
+        var _this = this;
 
-  methods: {
-    send_data: function send_data(model) {}
-  }
+        this.$axios.post('/orders/list').then(function (json) {
+            _this.orders = [];
+            for (var i in json.data) {
+                _this.orders.push(json.data[i]);
+            }
+            console.log(_this.orders);
+        });
+    },
+
+    methods: {
+        send_data: function send_data(model) {}
+    }
 });
 
 /***/ }),

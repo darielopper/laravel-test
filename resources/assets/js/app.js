@@ -24,10 +24,16 @@ Vue.component('modal', require('./components/Modal.vue'));
 const app = new Vue({
     el: '#app',
     data: {
-      orders: [{client: 'dariel'}]
+      orders: []
     },
     mounted(){
-
+        this.$axios.post('/orders/list').then((json) => {
+            this.orders = [];
+            for(var i in json.data){
+                this.orders.push(json.data[i]);
+            }
+            console.log(this.orders);
+        })
     },
     methods: {
         send_data(model){
