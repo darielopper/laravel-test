@@ -44028,7 +44028,7 @@ exports = module.exports = __webpack_require__(45)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -44077,6 +44077,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "Modal",
@@ -44084,10 +44085,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             model: {
                 client: '',
-                offer: '',
+                offer: 0,
                 amount: 1
             },
-            show_modal: true
+            show_modal: true,
+            offers: []
         };
     },
 
@@ -44103,7 +44105,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     created: function created() {
-        this.$axios.post('/offers/list').then(function (json) {}).cath(function (error) {
+        var _this = this;
+
+        this.$axios.post('/offers/list').then(function (json) {
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = json.data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var element = _step.value;
+
+                    _this.offers.push({ id: element.id, text: element.type + ' - ' + element.size });
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+        }).catch(function (error) {
             console.log(error);
             alert('Some error loading offers');
         });
@@ -44111,7 +44140,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     computed: {
         valid_data: function valid_data() {
-            return this.model.amount > 0 && this.model.client.length > 3 && this.model.offer !== 'Select 1 Offer';
+            return this.model.amount > 0 && this.model.client.length > 3 && this.model.offer !== 0;
         }
     }
 });
@@ -44220,7 +44249,20 @@ var render = function() {
                             }
                           }
                         },
-                        [_c("option", [_vm._v("Select 1 offer")])]
+                        [
+                          _c("option", { attrs: { value: "0" } }, [
+                            _vm._v("Select 1 offer")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.offers, function(item) {
+                            return _c(
+                              "option",
+                              { key: item, domProps: { value: item.id } },
+                              [_vm._v(_vm._s(item.text))]
+                            )
+                          })
+                        ],
+                        2
                       )
                     ])
                   ]),

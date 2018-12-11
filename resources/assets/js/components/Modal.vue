@@ -16,7 +16,8 @@
                         <div class="form-group">
                             <div class="form-line">
                                 <select class="form-control" v-model="model.offer">
-                                    <option>Select 1 offer</option>
+                                    <option value="0">Select 1 offer</option>
+                                    <option v-for="item in offers" :key="item" :value="item.id">{{ item.text }}</option>
                                 </select>
                             </div>
                         </div>
@@ -43,10 +44,11 @@
             return {
                 model: {
                     client: '',
-                    offer: '',
+                    offer: 0,
                     amount: 1
                 },
-                show_modal: true
+                show_modal: true,
+                offers: []
             }
         },
         props: {
@@ -62,15 +64,17 @@
         },
         created(){
           this.$axios.post('/offers/list').then((json) => {
-
-          }).cath(error => {
+              for(let element of json.data){
+                  this.offers.push({id: element.id, text: `${element.type} - ${element.size}`});
+              }
+          }).catch(error => {
               console.log(error);
               alert('Some error loading offers');
           })
         },
         computed: {
             valid_data(){
-                return this.model.amount > 0 && this.model.client.length > 3 && this.model.offer !== 'Select 1 Offer';
+                return this.model.amount > 0 && this.model.client.length > 3 && this.model.offer !== 0;
             }
         }
     }
