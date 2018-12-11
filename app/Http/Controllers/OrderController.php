@@ -44,4 +44,10 @@ class OrderController extends Controller
             'model' => $model
         ]);
     }
+
+    public function delete($id){
+        $order = Order::findOrFail($id);
+        $order->delete();
+        return response()->json(['success' => true]);
+    }
 }

@@ -43859,7 +43859,7 @@ exports = module.exports = __webpack_require__(45)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -43870,6 +43870,10 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
 //
 //
 //
@@ -43902,6 +43906,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         get_data: function get_data(item, data, i) {
             return item[data.abbr] ? item[data.abbr] : i + 1;
+        },
+        remove: function remove(item) {
+            var _this = this;
+
+            this.$axios.post("/order/" + item.id + "/delete").then(function (json) {
+                _this.elements.splice(_this.elements.findIndex(function (v) {
+                    return v.id === item.id;
+                }), 1);
+                alert("Order No. " + item.id + " removed");
+            }).catch(function (error) {
+                console.log(error);
+                alert('Some error was found deleting a order');
+            });
         }
     }
 });
@@ -43917,9 +43934,14 @@ var render = function() {
   return _c("table", { staticClass: "table table-condensed table-striped" }, [
     _c(
       "thead",
-      _vm._l(_vm.headers, function(item) {
-        return _c("th", [_vm._v(_vm._s(item.text))])
-      })
+      [
+        _vm._l(_vm.headers, function(item) {
+          return _c("th", [_vm._v(_vm._s(item.text))])
+        }),
+        _vm._v(" "),
+        _c("th", [_vm._v("Actions")])
+      ],
+      2
     ),
     _vm._v(" "),
     _c(
@@ -43928,15 +43950,34 @@ var render = function() {
         return _c(
           "tr",
           { key: i },
-          _vm._l(_vm.headers, function(data, j) {
-            return _c("td", { key: "m" + j }, [
-              _vm._v(
-                "\n                " +
-                  _vm._s(_vm.get_data(item, data, i)) +
-                  "\n            "
+          [
+            _vm._l(_vm.headers, function(data, j) {
+              return _c("td", { key: "m" + j }, [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.get_data(item, data, i)) +
+                    "\n            "
+                )
+              ])
+            }),
+            _vm._v(" "),
+            _c("td", [
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-xs btn-danger",
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      _vm.remove(item)
+                    }
+                  }
+                },
+                [_vm._v("Delete")]
               )
             ])
-          })
+          ],
+          2
         )
       })
     )
