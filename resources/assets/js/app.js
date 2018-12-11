@@ -32,7 +32,6 @@ const app = new Vue({
             for(var i in json.data){
                 this.orders.push(json.data[i]);
             }
-            console.log(this.orders);
         })
     },
     computed: {

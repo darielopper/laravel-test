@@ -1121,7 +1121,6 @@ var app = new Vue({
             for (var i in json.data) {
                 _this.orders.push(json.data[i]);
             }
-            console.log(_this.orders);
         });
     },
 
