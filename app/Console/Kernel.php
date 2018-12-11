@@ -15,8 +15,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Chrome::class,
-        Ratchet::class
+        Chrome::class
     ];
 
     /**
