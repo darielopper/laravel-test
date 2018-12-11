@@ -44028,7 +44028,7 @@ exports = module.exports = __webpack_require__(45)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -44097,9 +44097,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         accept: function accept() {
             this.$emit('accept', this.model);
-            alert('aki');
+            this.show_modal = false;
+            var modal = document.querySelector('.modal-backdrop');
+            modal.remove();
         }
     },
+    created: function created() {
+        this.$axios.post('/offers/list').then(function (json) {}).cath(function (error) {
+            console.log(error);
+            alert('Some error loading offers');
+        });
+    },
+
     computed: {
         valid_data: function valid_data() {
             return this.model.amount > 0 && this.model.client.length > 3 && this.model.offer !== 'Select 1 Offer';
@@ -44126,7 +44135,7 @@ var render = function() {
           expression: "show_modal"
         }
       ],
-      staticClass: "modal fade",
+      class: { modal: true, fade: true, in: _vm.show_modal },
       attrs: { id: "orderModal", tabindex: "-1", role: "dialog" }
     },
     [

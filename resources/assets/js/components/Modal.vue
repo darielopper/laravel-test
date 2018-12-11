@@ -1,6 +1,6 @@
 <template>
     <!-- Modal section -->
-    <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" v-show="show_modal">
+    <div :class="{modal: true, fade: true, in: show_modal}" id="orderModal" tabindex="-1" role="dialog" v-show="show_modal">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -55,8 +55,18 @@
         methods: {
             accept(){
                 this.$emit('accept', this.model);
-                alert('aki');
+                this.show_modal = false;
+                let modal = document.querySelector('.modal-backdrop');
+                modal.remove();
             }
+        },
+        created(){
+          this.$axios.post('/offers/list').then((json) => {
+
+          }).cath(error => {
+              console.log(error);
+              alert('Some error loading offers');
+          })
         },
         computed: {
             valid_data(){
