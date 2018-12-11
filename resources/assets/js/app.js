@@ -43,7 +43,7 @@ const app = new Vue({
     },
     methods: {
         send_data(model){
-
+            console.log(model);
         }
     }
 });

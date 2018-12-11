@@ -1134,7 +1134,9 @@ var app = new Vue({
         }
     },
     methods: {
-        send_data: function send_data(model) {}
+        send_data: function send_data(model) {
+            console.log(model);
+        }
     }
 });
 
@@ -44028,7 +44030,7 @@ exports = module.exports = __webpack_require__(45)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -44098,10 +44100,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         accept: function accept() {
-            this.$emit('accept', this.model);
+            this.$emit('accept', JSON.parse(JSON.stringify(this.model)));
+            this.clearData();
             this.show_modal = false;
             var modal = document.querySelector('.modal-backdrop');
             modal.remove();
+        },
+        clearData: function clearData() {
+            this.model.client = '';
+            this.offer = 0;
+            this.amount = 1;
         }
     },
     created: function created() {
@@ -44254,10 +44262,10 @@ var render = function() {
                             _vm._v("Select 1 offer")
                           ]),
                           _vm._v(" "),
-                          _vm._l(_vm.offers, function(item) {
+                          _vm._l(_vm.offers, function(item, j) {
                             return _c(
                               "option",
-                              { key: item, domProps: { value: item.id } },
+                              { key: "o" + j, domProps: { value: item.id } },
                               [_vm._v(_vm._s(item.text))]
                             )
                           })

@@ -17,7 +17,7 @@
                             <div class="form-line">
                                 <select class="form-control" v-model="model.offer">
                                     <option value="0">Select 1 offer</option>
-                                    <option v-for="item in offers" :key="item" :value="item.id">{{ item.text }}</option>
+                                    <option v-for="(item, j) in offers" :key="`o${j}`" :value="item.id">{{ item.text }}</option>
                                 </select>
                             </div>
                         </div>
@@ -56,10 +56,16 @@
         },
         methods: {
             accept(){
-                this.$emit('accept', this.model);
+                this.$emit('accept', JSON.parse(JSON.stringify(this.model)));
+                this.clearData();
                 this.show_modal = false;
                 let modal = document.querySelector('.modal-backdrop');
                 modal.remove();
+            },
+            clearData(){
+                this.model.client = '';
+                this.offer = 0;
+                this.amount = 1;
             }
         },
         created(){
