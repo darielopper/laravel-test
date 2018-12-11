@@ -15,10 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', function () {
-    return view('default');
+Route::group(['middleware' => 'auth'], function(){
+   Route::get('/orders', 'OrderController@index')->name('order');
 });
-
 
 Auth::routes();
 
