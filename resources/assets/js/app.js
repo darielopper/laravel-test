@@ -43,7 +43,13 @@ const app = new Vue({
     },
     methods: {
         send_data(model){
-            console.log(model);
+            this.$axios.post('/order/store', model).then(json => {
+                alert('New order created successfully!!!');
+                this.orders.push(json.data.model);
+            }).catch(error => {
+                console.log(error);
+                alert('Some errors was found saving order');
+            })
         }
     }
 });

@@ -11,6 +11,6 @@ class Order extends Model
     protected $fillable = ['client', 'amount'];
 
     public function offer(){
-        return $this->belongsTo(Offer::class);
+        return $this->belongsTo(Offer::class, 'offer_id');
     }
 }

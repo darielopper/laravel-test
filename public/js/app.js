@@ -1135,7 +1135,15 @@ var app = new Vue({
     },
     methods: {
         send_data: function send_data(model) {
-            console.log(model);
+            var _this2 = this;
+
+            this.$axios.post('/order/store', model).then(function (json) {
+                alert('New order created successfully!!!');
+                _this2.orders.push(json.data.model);
+            }).catch(function (error) {
+                console.log(error);
+                alert('Some errors was found saving order');
+            });
         }
     }
 });
